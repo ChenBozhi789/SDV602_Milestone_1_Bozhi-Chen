@@ -14,7 +14,7 @@ game_places = {
         'South': '', 
         'West': 'grove', 
         'East': '', 
-        'Image': 'start.png'
+        'Image': 'Map/start.png'
     },
     'forest': {
         'Story': 'You are in the Forest.\nTo the North is the Cave.\nTo the South is the Starting place.\nTo the West is River.\nTo the East is Stone.',
@@ -22,7 +22,7 @@ game_places = {
         'South': 'start', 
         'West': 'river', 
         'East': 'stone', 
-        'Image': 'forest.png'
+        'Image': 'Map/forest.png'
     },
     'cave': {
         'Story': 'You arrived at the entrance of a dark cave.\nTo the South is the Forest.',
@@ -30,7 +30,7 @@ game_places = {
         'South': 'forest', 
         'West': '', 
         'East': '', 
-        'Image': 'cave.png'
+        'Image': 'Map/cave.png'
     },
     'stone': {
         'Story': 'You came in front of the Stone now.\nTo the West is the Forest.',
@@ -38,7 +38,7 @@ game_places = {
         'South': '', 
         'West': 'forest', 
         'East': '', 
-        'Image': 'stone.png'
+        'Image': 'Map/stone.png'
     },
     'river': {
         'Story': 'You are by a River.\nTo the East is the Forest.\nTo the South is a Grove.',
@@ -46,7 +46,7 @@ game_places = {
         'South': 'grove', 
         'West': '', 
         'East': 'forest', 
-        'Image': 'river.png'
+        'Image': 'Map/river.png'
     },
     'grove': {
         'Story': 'You are in a peaceful Grove.\nTo the North is the River.\nTo the East is Starting Place',
@@ -54,7 +54,7 @@ game_places = {
         'South': '', 
         'West': '', 
         'East': 'start', 
-        'Image': 'grove.png'
+        'Image': 'Map/grove.png'
     }
 }
 
@@ -99,11 +99,11 @@ def make_a_window():
     # Window Style
     sg.theme('Dark Blue 3')
     # Input and output
-    prompt_input = [sg.Text('Enter your command', font='Helvetica 15'), sg.Input(size=(23, 1), font='Any 12', key='-IN-'), sg.Button('Enter', size=(6,0), bind_return_key=True)]
+    prompt_input = [sg.Text('Enter your command', font='Helvetica 15', pad=((0, 0), (0, 2))), sg.Input(size=(23, 1), font='Helvetica 12', key='-IN-'), sg.Button('Enter', size=(6,0), bind_return_key=True)]
     command_col = sg.Column([prompt_input])
     # Overall layout
     layout = [
-         [sg.Image(r'start.png', size=(500, 500), key="-IMG-"), sg.Text(show_current_place(), size=(100, 4), font='Helvetica 15', key='-OUTPUT-')],
+         [sg.Image(r'Map/start.png', size=(500, 500), key="-IMG-"), sg.Text(show_current_place(), size=(100, 4), font='Helvetica 15', key='-OUTPUT-')],
          [command_col]
         ]
     
@@ -115,23 +115,25 @@ if __name__ == "__main__":
     # This is a infinite loop
     while True:
         event, values = window.read()
-        # print(f'You just trigger {event}')
+        print(f'You just trigger {event}')
         if event ==  'Enter': 
-            current_place = command_parser.command_parsing(values['-IN-']) # Call command_parser from 'command_parser.py' to parse the command
-            if 'North'.lower() in current_place:
+            direction = command_parser.command_parsing(values['-IN-']) # Call command_parser from 'command_parser.py' to parse the command
+            if direction == None:
+                window['-OUTPUT-'].update('Invalid command, please use \n"North", "South", "West", \nor "East" to move.')
+            elif 'North'.lower() in direction:
                 current_story = game_play('North')
                 window['-OUTPUT-'].update(current_story)
-            elif 'South'.lower() in current_place:
+            elif 'South'.lower() in direction:
                 current_story = game_play('South')
                 window['-OUTPUT-'].update(current_story)
-            elif 'West'.lower() in current_place:
+            elif 'West'.lower() in direction:
                 current_story = game_play('West')
                 window['-OUTPUT-'].update(current_story)
-            elif 'East'.lower() in current_place:
+            elif 'East'.lower() in direction:
                 current_story = game_play('East')
                 window['-OUTPUT-'].update(current_story)
             else:
-                window['-OUTPUT-'].update('Invalid direction, please use \n"North", "South", "West", \nor "East" to move.')
+                window['-OUTPUT-'].update('Invalid command, please use \n"North", "South", "West", \nor "East" to move.')
             
             window['-IMG-'].update(game_places[game_state]['Image'], size=(500, 500))
 

@@ -13,21 +13,8 @@ def movement_parsing(command):
     """
     directions = ['north', 'south', 'west', 'east'] # Use list to store all directions
     command = command.lower().strip() # Convert to lower and remove all whitespace
-    if command.startswith('go '):
-        direction = command[3:] # Get the copy of direction, start from index 0
-    elif command.startswith('walk to '): # index 8
-        direction = command[8:] # Get the copy of direction, start from index 8
-    elif command.startswith('move to '): # index 8
-        direction = command[8:] # Get the copy of direction, start from index 8
-    elif command.startswith(''): # Check if command is a direction
-        direction = command[0:] # Get the copy of direction, start from index 3
-    else:
-        return None
-    
-    if direction in directions:
-        return direction
-    else:
-        return None
+    direction = next((command[(len(prefix)+1):] for prefix in ['go', 'move to', 'walk to'] if command.startswith(prefix)), command)
+    return direction if direction in directions else None
         
 def fighting_parsing(command):
     """
@@ -41,10 +28,7 @@ def fighting_parsing(command):
     """
     action = ['attack', 'heal', 'run', 'pick up', 'inventory']
     command = command.lower().strip()
-    if command in action:
-        return command
-    else:
-        return None
+    return command if command in action else None
     
 def status_parsing(command):
     """
@@ -57,10 +41,7 @@ def status_parsing(command):
         str: status
     """
     command = command.lower().strip()
-    if command == 'status':
-        return command
-    else:
-        return None
+    return command if command == 'status' else None
     
 if __name__ == "__main__":
     pass

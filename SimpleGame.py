@@ -186,7 +186,7 @@ def process_command(command):
 
     # If the command is not a valid command
     else:
-        current_story = 'Invalid command, please use \n"North", "South", "West", \nor "East" to move.'
+        current_story = 'Invalid command, please use \n"North", "South", "West", or "East" to move.'
     
     # Update the image and story of the current place on the window
     window['-IMG-'].update(game_places[game_state]['Image'], size=(500, 500))

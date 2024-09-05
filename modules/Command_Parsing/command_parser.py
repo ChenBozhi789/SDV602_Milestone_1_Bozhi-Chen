@@ -1,6 +1,7 @@
 from modules.Monster_Fight import monster_fight
+from modules.Player_Inventory import inventory
 
-def command_parsing(command):
+def movement_parsing(command):
     """
     Parse player command 
 
@@ -8,7 +9,7 @@ def command_parsing(command):
         command (string): The command entered by player in the input (key='-IN-')
 
     Returns:
-        str: The direction or error information (None)
+        str: direction or None
     """
     directions = ['north', 'south', 'west', 'east'] # Use list to store all directions
     command = command.lower().strip() # Convert to lower and remove all whitespace
@@ -28,9 +29,38 @@ def command_parsing(command):
     else:
         return None
         
-def fighting():
-    pass
+def fighting_parsing(command):
+    """
+    Parse player fighting command 
 
+    Args:
+        command (string): The command entered by player in the input (key='-IN-')
 
+    Returns:
+        str: action
+    """
+    action = ['attack', 'heal', 'run', 'pick up', 'inventory']
+    command = command.lower().strip()
+    if command in action:
+        return command
+    else:
+        return None
+    
+def status_parsing(command):
+    """
+    Parse player status command 
+
+    Args:
+        command (string): The command entered by player in the input (key='-IN-')
+
+    Returns:
+        str: status
+    """
+    command = command.lower().strip()
+    if command == 'status':
+        return command
+    else:
+        return None
+    
 if __name__ == "__main__":
     pass

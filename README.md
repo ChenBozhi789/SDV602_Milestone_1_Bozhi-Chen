@@ -4,7 +4,8 @@
 
 ### Prerequisites
 1. Install Python 3.10 or later
-2. Install all required libraries:
+2. Set up and start virual environment
+3. Install all required libraries:
 
 ### Set up virtual environment (You should open bash or powershell)
 1. Create virtual environment:
